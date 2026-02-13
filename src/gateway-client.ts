@@ -13,6 +13,7 @@ interface ChatWaiter {
 export class GatewayClient {
   private url: string;
   private token: string;
+  private password: string;
   private ws: WebSocket | null = null;
   private pending = new Map<string, PendingRequest>();
   public eventHandlers = new Map<string, (payload: any) => void>();
@@ -26,9 +27,10 @@ export class GatewayClient {
   private lastPong = 0;
   private _destroyed = false;
 
-  constructor(url: string, token: string, logger?: any) {
+  constructor(url: string, token: string, password: string, logger?: any) {
     this.url = url;
     this.token = token;
+    this.password = password;
     this.logger = logger;
   }
 
@@ -161,7 +163,7 @@ export class GatewayClient {
         mode: 'backend',
       },
       caps: [],
-      auth: { token: this.token },
+      auth: this.password ? { password: this.password } : { token: this.token },
       role: 'operator',
       scopes: ['operator.admin'],
     };

@@ -88,6 +88,7 @@ async function getGateway(): Promise<GatewayClient> {
     gatewayClient = new GatewayClient(
       currentConfig.openclaw.gatewayUrl,
       currentConfig.openclaw.token,
+      currentConfig.openclaw.password,
       logger
     );
   }

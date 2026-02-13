@@ -1,6 +1,7 @@
 export interface PluginConfig {
   openclaw: {
     token: string;
+    password: string;
     gatewayUrl: string;
     cliPath: string;
   };

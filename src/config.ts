@@ -3,6 +3,7 @@ import type { PluginConfig } from './types';
 export const DEFAULT_CONFIG: PluginConfig = {
   openclaw: {
     token: '',
+    password: '',
     gatewayUrl: 'ws://127.0.0.1:18789',
     cliPath: '/root/.nvm/versions/node/v22.22.0/bin/openclaw',
   },
@@ -31,7 +32,15 @@ export function buildConfigSchema(): any[] {
       label: '认证 Token',
       type: 'string',
       default: '',
-      description: 'OpenClaw Gateway 认证令牌（可选）',
+      description: 'OpenClaw Gateway Token 认证（推荐）',
+      secret: true,
+    },
+    {
+      key: 'openclaw.password',
+      label: '认证密码',
+      type: 'string',
+      default: '',
+      description: 'OpenClaw Gateway Password 认证（需在 Gateway 配置中设置 auth.mode=password）',
       secret: true,
     },
     {
