@@ -150,20 +150,15 @@ export class GatewayClient {
     timeout: NodeJS.Timeout
   ): void {
     const id = randomUUID();
-    const deviceId = 'qq-channel-' + randomUUID();
     const params = {
       minProtocol: 1,
       maxProtocol: 3,
       client: {
         id: 'gateway-client',
-        displayName: 'QQ Channel',
+        displayName: 'NapCat-QQ',
         version: '1.3.0',
         platform: 'linux',
         mode: 'backend',
-      },
-      device: {
-        id: deviceId,
-        displayName: 'NapCat-QQ',
       },
       caps: [],
       auth: { token: this.token },
