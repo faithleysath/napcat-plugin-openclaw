@@ -204,6 +204,23 @@ async function sendReply(ctx: any, messageType: string, groupId: any, userId: an
 
 export let plugin_config_ui: any[] = [];
 
+// ========== Config Utils ==========
+
+function parseWhitespaceList(value: string | string[]): number[] {
+  if (Array.isArray(value)) {
+    return value.map((v) => Number(v)).filter((v) => !isNaN(v));
+  }
+  if (!value || typeof value !== 'string') {
+    return [];
+  }
+  return value
+    .split(/[,，\s]+/)
+    .map((s) => s.trim())
+    .filter((s) => s.length > 0)
+    .map((s) => Number(s))
+    .filter((n) => !isNaN(n));
+}
+
 export const plugin_init = async (ctx: any): Promise<void> => {
   logger = ctx.logger;
   configPath = ctx.configPath;
@@ -251,7 +268,7 @@ export const plugin_onmessage = async (ctx: any, event: any): Promise<void> => {
     }
 
     // User whitelist
-    const userWhitelist = currentConfig.behavior.userWhitelist;
+    const userWhitelist = parseWhitespaceList(currentConfig.behavior.userWhitelist);
     if (userWhitelist.length > 0) {
       if (!userWhitelist.some((id) => Number(id) === Number(userId))) return;
     }
@@ -263,7 +280,7 @@ export const plugin_onmessage = async (ctx: any, event: any): Promise<void> => {
       shouldHandle = true;
     } else if (messageType === 'group') {
       if (!groupId) return;
-      const gWhitelist = currentConfig.behavior.groupWhitelist;
+      const gWhitelist = parseWhitespaceList(currentConfig.behavior.groupWhitelist);
       if (gWhitelist.length > 0 && !gWhitelist.some((id) => Number(id) === Number(groupId))) return;
       if (currentConfig.behavior.groupAtOnly) {
         const isAtBot = event.message?.some(
