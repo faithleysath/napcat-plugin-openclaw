@@ -78,16 +78,16 @@ export function buildConfigSchema(): any[] {
     {
       key: 'behavior.userWhitelist',
       label: '用户白名单',
-      type: 'text',
+      type: 'string',
       default: '',
-      description: '允许访问的用户 QQ 号列表（空则允许所有，逗号分隔）',
+      description: '允许访问的用户 QQ 号列表（空则允许所有，逗号分隔，如：123456,789012）',
     },
     {
       key: 'behavior.groupWhitelist',
       label: '群组白名单',
-      type: 'text',
+      type: 'string',
       default: '',
-      description: '允许访问的群号列表（空则允许所有，逗号分隔）',
+      description: '允许访问的群号列表（空则允许所有，逗号分隔，如：987654321,123456789）',
     },
   ];
 }
